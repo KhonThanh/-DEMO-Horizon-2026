@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon</title>
+    <link rel="icon" type="image/png" href="./img/logo/logo-favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <!-- <link rel="stylesheet" href="../dist/css/style.min.css"> -->
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    <link rel="stylesheet" href="./css/utility.css">
+</head>
+
+<body>
+    <header class="container-f" data-include="./component/header.html"></header>
+    <main class="container-f flex flex-col center-hor">
+        <section class="flex bg-gray container-f">
+            <div class=" container-l nav-bar__container">
+                <a href="#" class="nav-bar__item">Trang chủ</a>
+                <a href="#" class="nav-bar__item">Tin tức</a>
+                <a href="#" class="nav-bar__item">"Tên bài viết"</a>
+            </div>
+        </section>
+        <section class="container-f container-padding flex center-hor">
+            <div class="container-l flex gap-30 news-detail-wrapper">
+
+                <div class="news-detail__main col-9 flex flex-col gap-20">
+                    <div class="news-detail__header flex flex-col gap-10">
+                        <img src="./img/news/detail-banner.jpg" alt="Banner" class="news-detail__banner custom-item">
+                        <h1 class="news-detail__title text-header-size bold uppercase">CHUẨN MỰC KẾ TOÁN VIỆT NAM ĐÃ
+                            CÔNG BỐ</h1>
+                        <p class="news-detail__meta text-xs color-gray italic">By Savvy Security - 2026 - 12 Mins Read
+                        </p>
+                    </div>
+
+                    <div class="news-detail__content text-desc flex flex-col gap-10">
+                        <p class="bold">Đợt 1: Quyết định 149/2001/QĐ-BTC</p>
+                        <ul class="flex flex-col gap-10">
+                            <li>1 - Chuẩn mực số 02 - Hàng tồn kho;</li>
+                            <li>2 - Chuẩn mực số 03 - Tài sản cố định hữu hình;</li>
+                        </ul>
+                    </div>
+
+                    <div class="news-detail__tags flex center-ver gap-10 padding-top-20">
+                        <span class="bold">Từ khóa:</span>
+                        <a href="#" class="tag-item bg-gray custom-item text-xs">Kế toán</a>
+                    </div>
+                </div>
+
+                <aside class="news-detail__sidebar col-3 flex flex-col gap-20">
+                    <div class="sidebar-box flex flex-col gap-10">
+                        <h3 class="sidebar-box__title bold">Tìm kiếm bài viết</h3>
+                        <div class="search-box pos-rel">
+                            <input type="text" placeholder="Tìm kiếm..." class="form-input col-1 custom-item">
+                        </div>
+                    </div>
+
+                    <div class="sidebar-box flex flex-col gap-10">
+                        <h3 class="sidebar-box__title bold">Tin tức mới nhất</h3>
+                        <div class="side-news-list flex flex-col gap-10">
+                            <article class="side-news-item flex gap-10 pos-rel">
+                                <div class="side-news-item__info flex-1">
+                                    <h4 class="bold text-xs"><a href="./news-detail.html" class="stretched-link">Chính
+                                            sách Thuế 2026...</a></h4>
+                                    <span class="text-xs color-gray">23-3-2026</span>
+                                </div>
+                                <img src="./img/news/thumb.jpg" alt="thumb" class="side-news-item__img custom-item">
+                            </article>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-box flex flex-col gap-10">
+                        <h3 class="sidebar-box__title bold">Danh mục tin tức</h3>
+                        <div class="category-sidebar flex flex-col gap-10">
+                            <a href="#" class="category-sidebar__item custom-item flex jus-content">Tin tức nội bộ
+                                <span>&gt;</span></a>
+                            <a href="#" class="category-sidebar__item custom-item flex jus-content">Tin chuyên ngành
+                                <span>&gt;</span></a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="container-f bg-gray container-padding flex center-hor">
+            <div class="container-l flex flex-col gap-20">
+                <h2 class="bold uppercase">Bài viết liên quan</h2>
+                <div class="related-list flex flex-wrap gap-20">
+                    <article class="news-grid-item col-4 pos-rel custom-item flex flex-col gap-10 bg-white">
+                        <img src="./img/news/rel-1.jpg" alt="rel" class="news-grid-item__img img-content">
+                        <h3 class="news-grid-item__title bold text-desc">
+                            <a href="./news-detail.html" class="stretched-link">Chính sách Thuế mới nhất 2026...</a>
+                        </h3>
+                        <p class="text-xs color-gray">23-3-2026</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="container-f bg-white center-ver" data-include="./component/footer.html"></footer>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript" src="./js/frontend.js"></script>
+</body>
+
+</html>
