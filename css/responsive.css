@@ -1,0 +1,73 @@
+@media screen and (max-width: 1270px) {}
+
+@media screen and (min-width: 1200px) {}
+
+@media screen and (max-width: 1200px) {}
+
+@media screen and (max-width: 1073px) {}
+
+@media screen and (max-width: 900px) {
+    .header-top .menu-container__item {
+        display: none !important;
+    }
+
+    .header-top .menu-container__bar.active {
+        display: flex !important;
+    }
+
+    .header-top {
+        align-items: center !important;
+    }
+}
+
+@media screen and (max-width: 835px) {}
+
+@media screen and (max-width: 800px) {}
+
+@media screen and (min-width: 769px) {}
+
+@media screen and (max-width: 768px) {
+
+    :root {
+        --font-size-base: 14px;
+    }
+
+    .container-padding {
+        padding: 30px 0px;
+    }
+
+    .footer-top img {
+        max-width: 260px;
+    }
+
+    .text-header-size {
+        font-size: calc(var(--font-size-base) + 10px);
+    }
+
+    .intro-image img,
+    .intro-image,
+    .history-image img,
+    .history-image,
+    .philosophy-image img,
+    .philosophy-image,
+    .calc-image,
+    .about-image,
+    .calc-image img,
+    .about-image img {
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        height: unset;
+    }
+}
+
+@media screen and (max-width : 700px) {}
+
+@media screen and (max-width: 590px) {
+    header {
+        padding-bottom: 0px;
+    }
+}
+
+@media screen and (max-width: 551px) {}
+
+@media screen and (max-width: 480px) {}
