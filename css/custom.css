@@ -334,8 +334,116 @@
 }
 
 /* css tin tức */
-.category-header h2{
+.category-header h2 {
     font-size: calc(var(--font-size-base) + 8px);
+}
+
+.news-top__left{
+    width: 70%;
+}
+
+.news-top__right{
+    width: 30%;
+}
+
+.news-side-item__content,
+.news-side-item__img{
+    width: 50%;
+}
+
+.news-side-item__img{
+    border-radius: 5px;
+}
+
+.news-card-big img{
+    aspect-ratio: 811 / 456;
+    border-radius: 5px;
+}
+
+/* css tin tức chi tiết */
+.news-detail__banner {
+    aspect-ratio: 934 / 527;
+}
+
+.news-detail__content ul {
+    padding-left: 20px;
+}
+
+.news-detail__content ul li {
+    margin-bottom: 10px;
+}
+
+.tag-item {
+    padding: 8px 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: all 0.6s ease;
+}
+
+.tag-item:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.search-box {
+    min-height: 46px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.box-share__item img {
+    max-width: 33px;
+}
+
+.sidebar-box {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.form-input {
+    border: transparent;
+}
+
+.search-btn img {
+    max-width: 20px;
+    opacity: 50%;
+}
+
+.news-detail__sidebar {
+    width: 35%;
+}
+
+.side-news-item__img,
+.side-news-item__info {
+    width: 50%;
+}
+
+.side-news-item__img{
+    aspect-ratio: 223 / 126;
+}
+
+.side-news-item__info {
+    padding: 10px 0px;
+}
+
+.side-news-item__info h4 a{
+    -webkit-line-clamp: 2;
+}
+
+.side-news-item:hover .news-title, 
+.side-news-item:hover h4 a {
+    color: var(--primary-color); 
+    transition: 0.3s ease;
+}
+
+
+.category-sidebar__item{
+    padding: 20px;
+    transition: all 0.6s ease;
+    font-size: var(--font-size-base);
+}
+
+.category-sidebar__item:hover{
+    border: 1px solid var(--primary-color);
 }
 
 /* css roll to top */
@@ -963,30 +1071,12 @@
 }
 
 /* css intro */
-.about-intro-section {}
-
-.intro-content {}
-
-.section-title {}
-
-.img-content {}
-
-.history-section {}
-
-.history-content {}
-
-.philosophy-section {}
-
-.philosophy-content {}
-
 .vision-mission-section {
     background-image: url(../img/about/background-intro.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
-
-.vision-grid {}
 
 .card-title {
     text-transform: unset;
@@ -1012,7 +1102,7 @@
 /* css footer */
 
 footer {
-    border-top: 1px solid var(--black-color);
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.03);
 }
 
 .footer-top {

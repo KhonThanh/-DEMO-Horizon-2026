@@ -40,6 +40,8 @@ html {
 button {
   font-family: var(--font-roboto);
   cursor: pointer;
+  border: transparent;
+  background-color: transparent;
 }
 
 input:focus {
