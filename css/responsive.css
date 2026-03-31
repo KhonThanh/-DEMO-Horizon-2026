@@ -11,7 +11,7 @@
         display: none !important;
     }
 
-    .header-top .menu-container__bar.active {
+    .header-top .menu-container__bar {
         display: flex !important;
     }
 
@@ -19,7 +19,7 @@
         align-items: center !important;
     }
 
-    .header-container::after {
+    .header-top .header-container::after {
         background: unset;
     }
 }
@@ -63,7 +63,7 @@
     }
 
     .container-padding {
-        padding: 30px 0px;
+        padding: 30px 0px !important;
     }
 
     .footer-top img {

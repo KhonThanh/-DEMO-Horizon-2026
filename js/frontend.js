@@ -344,110 +344,6 @@ function initSlickSlider({
   }
 }
 
-// js chức năng bấm hình sản phẩm
-function initProductGallery({
-  containerSelector,
-  mainSelector,
-  thumbSelector
-}) {
-
-  const container = document.querySelector(containerSelector);
-  if (!container) return;
-
-  const mainDisplay = container.querySelector(mainSelector);
-  const thumbs = container.querySelectorAll(thumbSelector);
-
-  const prevBtn = container.querySelector(".gallery-prev");
-  const nextBtn = container.querySelector(".gallery-next");
-
-  let currentIndex = 0;
-
-  const showItem = (index) => {
-
-    const item = thumbs[index];
-    const type = item.dataset.type;
-
-    currentIndex = index;
-
-    // IMAGE
-    if (type === "image") {
-
-      mainDisplay.innerHTML =
-        `<img src="${item.src}" class="product-main-image">`;
-
-    }
-
-    // VIDEO
-    if (type === "video") {
-
-      const videoUrl = item.dataset.video;
-
-      mainDisplay.innerHTML =
-        `<iframe
-          width="100%"
-          height="400"
-          src="${videoUrl}"
-          frameborder="0"
-          allowfullscreen>
-        </iframe>`;
-
-    }
-
-  };
-
-  thumbs.forEach((thumb, index) => {
-    thumb.addEventListener("click", () => showItem(index));
-  });
-
-  prevBtn?.addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + thumbs.length) % thumbs.length;
-    showItem(currentIndex);
-  });
-
-  nextBtn?.addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % thumbs.length;
-    showItem(currentIndex);
-  });
-
-}
-
-// chức năng swiper ở mục tab và sản phẩm trang chủ
-function enableHorizontalSwipe(selector, speed = 1) {
-  const container = document.querySelector(selector);
-  if (!container) return;
-
-  let isDown = false;
-  let startX, scrollLeft;
-
-  const startDrag = e => {
-    isDown = true;
-    container.classList.add("grabbing");
-    startX = e.pageX || e.touches[0].pageX;
-    scrollLeft = container.scrollLeft;
-  };
-
-  const moveDrag = e => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX || e.touches[0].pageX;
-    const walk = (x - startX) * speed;
-    container.scrollLeft = scrollLeft - walk;
-  };
-
-  const endDrag = () => {
-    isDown = false;
-    container.classList.remove("grabbing");
-  };
-
-  // Gán event cho cả chuột & cảm ứng
-  container.addEventListener("mousedown", startDrag);
-  container.addEventListener("touchstart", startDrag);
-  container.addEventListener("mousemove", moveDrag);
-  container.addEventListener("touchmove", moveDrag);
-  container.addEventListener("mouseup", endDrag);
-  container.addEventListener("mouseleave", endDrag);
-  container.addEventListener("touchend", endDrag);
-}
 
 // chức năng đổi tên và gán link vào a và đạc biệt thêm thẻ li a vào mục lục bài viét
 function generateHeadingLinks({
@@ -518,6 +414,7 @@ function generateHeadingLinks({
     }
   }
 }
+
 // js bật tắt menu
 function toggleMenu(buttonSelector, menuSelector) {
   const button = document.querySelector(buttonSelector);
@@ -554,133 +451,6 @@ function initScrollToTop(btnId = "btnToTop", showOffset = 1000) {
     window.scroll({
       top: 0,
       behavior: "smooth",
-    });
-  });
-}
-
-function initMobileMenuSimple() {
-
-  // ===== LEVEL 1 =====
-  document.querySelectorAll(".m-menu__link").forEach(link => {
-    link.addEventListener("click", function (e) {
-      const currentItem = this.closest(".m-menu__item");
-      if (!currentItem) return;
-      const submenu = currentItem.querySelector(".m-submenu");
-      if (!submenu) return;
-      e.preventDefault();
-      document.querySelectorAll(".m-menu__item.is-active").forEach(item => {
-        if (item !== currentItem) {
-          item.classList.remove("is-active");
-        }
-      });
-      currentItem.classList.toggle("is-active");
-    });
-  });
-
-
-  // ===== LEVEL 2 =====
-  document.querySelectorAll(".m-submenu__item > a").forEach(link => {
-    link.addEventListener("click", function (e) {
-      const currentItem = this.closest(".m-submenu__item");
-      if (!currentItem) return;
-
-      const submenu = currentItem.querySelector(".m-submenu");
-      if (!submenu) return;
-
-      e.preventDefault();
-      const siblings = currentItem
-        .closest(".m-submenu")
-        .querySelectorAll(".m-submenu__item.is-active");
-
-      siblings.forEach(item => {
-        if (item !== currentItem) {
-          item.classList.remove("is-active");
-        }
-      });
-
-      currentItem.classList.toggle("is-active");
-    });
-  });
-
-}
-
-// js chạy thanh bar ở trang giới thiệu
-function runCoreProgress() {
-  document.querySelectorAll(".progress-bar").forEach(bar => {
-    const percent = bar.dataset.percent || 0;
-
-    bar.style.transition = "none";
-    bar.style.width = "0";
-
-    requestAnimationFrame(() => {
-      bar.style.transition = "width 1.2s ease";
-      bar.style.width = percent + "%";
-    });
-  });
-}
-// js phần table trong email
-function initTechBoxToggle({
-  techBoxSelector = ".tech-box",
-  tableSelector = ".table-scroll",
-  activeClass = "active",
-} = {}) {
-  const techBoxes = document.querySelectorAll(techBoxSelector);
-  const tables = document.querySelectorAll(tableSelector);
-
-  if (!techBoxes.length || !tables.length) return;
-
-  techBoxes.forEach((box, index) => {
-    if (box.dataset._techBound === "true") return;
-    box.dataset._techBound = "true";
-
-    box.addEventListener("click", () => {
-      techBoxes.forEach(b => b.classList.remove(activeClass));
-      tables.forEach(t => t.classList.remove(activeClass));
-
-      box.classList.add(activeClass);
-      if (tables[index]) {
-        tables[index].classList.add(activeClass);
-      }
-    });
-  });
-}
-
-// js vuôt table
-function initHorizontalDragScroll(selector = ".table-scroll") {
-  const elements = document.querySelectorAll(selector);
-
-  elements.forEach((el) => {
-    // tránh bind trùng
-    if (el.dataset.dragScrollBound === "true") return;
-    el.dataset.dragScrollBound = "true";
-
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    el.addEventListener("mousedown", (e) => {
-      isDown = true;
-      el.classList.add("is-dragging");
-      startX = e.pageX - el.offsetLeft;
-      scrollLeft = el.scrollLeft;
-    });
-
-    el.addEventListener("mouseleave", () => {
-      isDown = false;
-      el.classList.remove("is-dragging");
-    });
-
-    el.addEventListener("mouseup", () => {
-      isDown = false;
-      el.classList.remove("is-dragging");
-    });
-
-    el.addEventListener("mousemove", (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - el.offsetLeft;
-      const walk = x - startX;
-      el.scrollLeft = scrollLeft - walk;
     });
   });
 }
@@ -895,7 +665,15 @@ document.addEventListener("DOMContentLoaded", () => {
         trigger: ".pagination-btn__custom.page-num",
         behavior: "activate",
         activeClass: "active",
-      }
+      },
+      {
+        trigger: ".header-bottom .menu-container__bar",
+        target:".m-menu",
+        behavior: "toggle",
+        activeClass: "active",
+        closeOnOutside: true,
+        closeOnEsc:true,
+      },
     ]);
     // 🟡 roll to the top
     initScrollToTop();

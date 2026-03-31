@@ -65,10 +65,6 @@
     color: var(--white-color);
 }
 
-.menu-container__bar.active {
-    display: none !important;
-}
-
 .menu-container__bar {
     background-color: var(--primary-color);
     width: 48px;
@@ -77,6 +73,7 @@
     height: auto;
     cursor: pointer;
     padding: 10px;
+    display: none !important;
 }
 
 .menu-item__exception {
@@ -194,14 +191,13 @@
     left: auto !important;
     right: 0 !important;
     transform: none !important;
-    /* Xóa căn giữa nếu có */
 }
 
 .header-container {
     position: relative;
 }
 
-.header-container::after {
+.header-top .header-container::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -498,7 +494,7 @@
     width: 10px;
     height: auto;
     margin-left: 10px;
-    background-image: url(../../src/img/icon/chevron-right.webp);
+    background-image: url(../img/icon/chevron-right.webp);
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
