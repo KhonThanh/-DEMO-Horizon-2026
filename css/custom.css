@@ -358,7 +358,7 @@
     display: inline-block;
 }
 
-.news-detail__content > ul{
+.news-detail__content  ul{
     list-style: none;
 }
 
