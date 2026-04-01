@@ -668,11 +668,20 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       {
         trigger: ".header-bottom .menu-container__bar",
-        target:".m-menu",
+        target: ".m-menu",
         behavior: "toggle",
         activeClass: "active",
         closeOnOutside: true,
-        closeOnEsc:true,
+        closeOnEsc: true,
+      },
+      {
+        trigger: ".news-detail__content h3",
+        behavior: "activate",
+        activeClass: "active",
+        onToggle: (trigger) => {
+          document.querySelectorAll(".news-detail__content h3").forEach(h => h.classList.remove("active"));
+          trigger.classList.add("active");
+        }
       },
     ]);
     // 🟡 roll to the top
