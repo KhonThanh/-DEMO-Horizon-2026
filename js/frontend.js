@@ -344,19 +344,37 @@ function initSlickSlider({
   }
 }
 
+// thêm ở menu nà nha
+function buildDynamicMenu(headingData, menuSelector) {
+  const menuContainer = document.querySelector(menuSelector);
+  if (!menuContainer || headingData.length === 0) return;
 
-// chức năng đổi tên và gán link vào a và đạc biệt thêm thẻ li a vào mục lục bài viét
-function generateHeadingLinks({
-  contentSelector,
-  outputSelector = null,
-  linkSelector = null,
-  toggleSelector = null
-}) {
-  const content = document.querySelector(contentSelector);
-  if (!content) return;
+  // Xóa cái menu tĩnh bồ đang code cứng đi (để nhường chỗ cho menu tự động)
+  menuContainer.innerHTML = '';
 
-  const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6");
-  if (!headings.length) return;
+  // Duyệt mảng và tạo thẻ a href="#id"
+  headingData.forEach(item => {
+    const menuItem = `
+            <div class="menu-leveltwo__container pos-rel">
+                <a href="#${item.id}">${item.text}</a>
+            </div>
+        `;
+    menuContainer.insertAdjacentHTML('beforeend', menuItem);
+  });
+}
+
+// HÀM 1: QUÉT NỘI DUNG, GẮN ID VÀ LẤY DATA
+// Gộp 2 tính năng: Quét 1 vùng cụ thể HOẶC quét toàn bộ web ("all")
+function extractHeadingData(contentSelector, headingTags = "h1, h2, h3, h4, h5, h6") {
+  const content = contentSelector === "all" ? document : document.querySelector(contentSelector);
+  
+  if (!content) {
+      console.warn(`Không tìm thấy vùng quét: ${contentSelector}`);
+      return [];
+  }
+
+  const headings = content.querySelectorAll(headingTags);
+  if (!headings.length) return [];
 
   const toSlug = str => str
     .normalize("NFD")
@@ -366,53 +384,80 @@ function generateHeadingLinks({
     .replace(/[^\w\-]/g, "")
     .toLowerCase();
 
+  const data = [];
+
   headings.forEach((h, i) => {
     const text = h.textContent.trim();
-    const id = toSlug(text) || `heading-${i}`;
-    h.id = id;
+    
+    let id = h.id || toSlug(text) || `heading-${i}`;
+
+    if (document.getElementById(id) && document.getElementById(id) !== h) {
+        let baseId = id;
+        let counter = 1;
+        while (document.getElementById(`${baseId}-${counter}`) && document.getElementById(`${baseId}-${counter}`) !== h) {
+            counter++;
+        }
+        id = `${baseId}-${counter}`;
+    }
+
+    h.id = id; 
+    data.push({ 
+        id: id, 
+        text: text,
+        tag: h.tagName.toLowerCase() 
+    });
   });
 
-  if (outputSelector) {
-    const tocBody = document.querySelector(outputSelector);
-    if (tocBody) {
-      tocBody.innerHTML = "";
-      headings.forEach(h => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = `#${h.id}`;
-        a.textContent = h.textContent.trim();
-        li.appendChild(a);
-        tocBody.appendChild(li);
-      });
-    }
+  return data;
+}
 
+// HÀM 2: NHÂN BẢN TEMPLATE VÀ ĐỔ DỮ LIỆU
+function renderDynamicList(headingData, targetSelector) {
+  if (!headingData || headingData.length === 0) return;
 
-    if (toggleSelector && tocBody) {
-      const toggle = document.querySelector(toggleSelector);
-      toggle.addEventListener("click", e => {
-        e.stopPropagation();
-        tocBody.classList.toggle("open");
-      });
-      document.addEventListener("click", e => {
-        if (!e.target.closest(toggleSelector)) tocBody.classList.remove("open");
-      });
-    }
+  const targetContainer = document.querySelector(targetSelector);
+  if (!targetContainer) {
+    console.log('Không tìm thấy menu');
+    return;
   }
 
+  const template = targetContainer.firstElementChild;
+  if (!template) {
+    console.warn(`Vui lòng để lại 1 thẻ con trong ${targetSelector} để làm mẫu!`);
+    return;
+  }
 
-  if (linkSelector) {
-    const links = document.querySelectorAll(linkSelector);
-    const count = Math.min(headings.length, links.length);
-    for (let i = 0; i < count; i++) {
-      const heading = headings[i];
-      const link = links[i];
-      link.setAttribute("href", `#${heading.id}`);
-      link.addEventListener("click", e => {
+  targetContainer.innerHTML = "";
+
+  headingData.forEach(item => {
+    const clone = template.cloneNode(true);
+    const aTag = clone.querySelector("a");
+
+    if (aTag) {
+      aTag.href = `#${item.id}`;
+      let rawText = item.text; 
+      let formattedText = rawText.charAt(0).toUpperCase() + rawText.slice(1).toLowerCase();
+      aTag.textContent = formattedText; 
+
+      aTag.addEventListener("click", e => {
         e.preventDefault();
-        heading.scrollIntoView({ behavior: "smooth", block: "start" });
+        const targetSection = document.getElementById(item.id);
+
+        if (targetSection) {
+          const headerHeight = 300; 
+          const elementPosition = targetSection.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - headerHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
       });
     }
-  }
+
+    targetContainer.appendChild(clone);
+  });
 }
 
 // js bật tắt menu
@@ -526,16 +571,6 @@ function initFormValidation(root = document) {
 // ----------- Vùng gọi biến --------------
 document.addEventListener("DOMContentLoaded", () => {
   includeHTML(() => {
-    // 📚 1️⃣ MỤC LỤC & MENU LIÊN KẾT
-    generateHeadingLinks({
-      contentSelector: ".blog-content",
-      outputSelector: ".table-heading__body ul",
-      toggleSelector: ".table-heading__top"
-    });
-    generateHeadingLinks({
-      contentSelector: "#intro-content",
-      linkSelector: ".menu-shortcut__container .intro-banner__shortcut"
-    });
     // 🟢 Slide banner chính
     initSlickSlider({
       mainSelector: '.slide-container',
@@ -689,8 +724,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✨ 4️⃣ HIỆU ỨNG ẢNH & REVEAL
     applyImageEnhancements();
     initRevealEffect();
-    validateField('.js-validate-form')
+    // validateField('.js-validate-form');
   });
+});
+
+document.addEventListener("includesLoaded", () => {
+  extractHeadingData("all");
+  extractHeadingData(".intro-container", "h1, h2")
+  const introData = extractHeadingData(".intro-container", "h1, h2");
+  console.log(introData);
+  renderDynamicList(introData, "#intro-menu-desktop");
 });
 
 // 🔁 Cập nhật khi include hoặc slick load lại
