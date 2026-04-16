@@ -344,25 +344,6 @@ function initSlickSlider({
   }
 }
 
-// thêm ở menu nà nha
-function buildDynamicMenu(headingData, menuSelector) {
-  const menuContainer = document.querySelector(menuSelector);
-  if (!menuContainer || headingData.length === 0) return;
-
-  // Xóa cái menu tĩnh bồ đang code cứng đi (để nhường chỗ cho menu tự động)
-  menuContainer.innerHTML = '';
-
-  // Duyệt mảng và tạo thẻ a href="#id"
-  headingData.forEach(item => {
-    const menuItem = `
-            <div class="menu-leveltwo__container pos-rel">
-                <a href="#${item.id}">${item.text}</a>
-            </div>
-        `;
-    menuContainer.insertAdjacentHTML('beforeend', menuItem);
-  });
-}
-
 // HÀM 1: QUÉT NỘI DUNG, GẮN ID VÀ LẤY DATA
 // Gộp 2 tính năng: Quét 1 vùng cụ thể HOẶC quét toàn bộ web ("all")
 function extractHeadingData(contentSelector, headingTags = "h1, h2, h3, h4, h5, h6") {
