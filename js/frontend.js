@@ -549,6 +549,54 @@ function initFormValidation(root = document) {
   });
 }
 
+// js đổ active vào menu
+function initUniversalActiveMenu(menuSelector = '', activeClassName = 'active') {
+    const currentUrl = window.location.href.split(/[?#]/)[0];
+
+    const menuLinks = document.querySelectorAll(`${menuSelector} a`);
+    let bestMatch = null;
+    let longestMatchLength = 0;
+
+    menuLinks.forEach(link => {
+        const hrefAttr = link.getAttribute('href');
+        if (!hrefAttr || hrefAttr.startsWith('#') || hrefAttr.startsWith('javascript')) return;
+        const linkUrl = link.href.split(/[?#]/)[0];
+        if (currentUrl === linkUrl) {
+            bestMatch = link;
+            longestMatchLength = linkUrl.length;
+        } 
+        else if (currentUrl.startsWith(linkUrl)) {
+            const isHomePage = linkUrl.endsWith('/') || linkUrl.endsWith('index.html') || linkUrl.endsWith('/en') || linkUrl.endsWith('/kn');
+            
+            if (!isHomePage && linkUrl.length > longestMatchLength) {
+                bestMatch = link;
+                longestMatchLength = linkUrl.length;
+            }
+        }
+    });
+    if (bestMatch) {
+        bestMatch.classList.add(activeClassName);
+        const parentMenu = bestMatch.closest(menuSelector);
+        if (parentMenu) parentMenu.classList.add(activeClassName);
+    } else {
+        const homeLink = Array.from(menuLinks).find(link => {
+            const lUrl = link.href.split(/[?#]/)[0];
+            return lUrl.endsWith('/') || lUrl.endsWith('index.html') || lUrl.endsWith('/en') || lUrl.endsWith('/kn');
+        });
+        
+        if (homeLink) {
+            homeLink.classList.add(activeClassName);
+            const parentMenu = homeLink.closest(menuSelector);
+            if (parentMenu) parentMenu.classList.add(activeClassName);
+        }
+    }
+}
+
+// Chạy hàm khi trang web tải xong
+document.addEventListener("DOMContentLoaded", () => {
+    initUniversalActiveMenu('.menu-container__item', 'active'); 
+});
+
 // ----------- Vùng gọi biến --------------
 document.addEventListener("DOMContentLoaded", () => {
   includeHTML(() => {
@@ -705,6 +753,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✨ 4️⃣ HIỆU ỨNG ẢNH & REVEAL
     applyImageEnhancements();
     initRevealEffect();
+    initUniversalActiveMenu('.menu-container__item', 'active');
     // validateField('.js-validate-form');
   });
 });
